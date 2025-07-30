@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ScriptableDroid</string>
+    <string name="scripts">Scripts</string>
+    <string name="new_script">New Script</string>
+    <string name="run_script">Run Script</string>
+    <string name="edit_script">Edit Script</string>
+    <string name="delete_script">Delete Script</string>
+    <string name="script_name">Script Name</string>
+    <string name="enter_script_name">Enter script name</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="example_script">Example Script</string>
+    <string name="battery_info">Battery Info</string>
+    <string name="notification_test">Notification Test</string>
+    <string name="script_output">Script Output</string>
+    <string name="clear_output">Clear Output</string>
+</resources>
