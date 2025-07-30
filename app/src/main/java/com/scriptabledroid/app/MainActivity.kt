@@ -3,22 +3,29 @@ package com.scriptabledroid.app
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.scriptabledroid.app.databinding.ActivityMainBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var recyclerViewScripts: RecyclerView
+    private lateinit var textViewEmpty: TextView
+    private lateinit var fabNewScript: FloatingActionButton
     private lateinit var scriptStorage: ScriptStorage
     private lateinit var scriptEngine: ScriptEngine
     private lateinit var scriptAdapter: ScriptAdapter
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
+        
+        recyclerViewScripts = findViewById(R.id.recyclerViewScripts)
+        textViewEmpty = findViewById(R.id.textViewEmpty)
+        fabNewScript = findViewById(R.id.fabNewScript)
         
         scriptStorage = ScriptStorage(this)
         scriptEngine = ScriptEngine(this)
@@ -39,14 +46,14 @@ class MainActivity : AppCompatActivity() {
             onDeleteClick = { script -> confirmDeleteScript(script) }
         )
         
-        binding.recyclerViewScripts.apply {
+        recyclerViewScripts.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = scriptAdapter
         }
     }
     
     private fun setupFab() {
-        binding.fabNewScript.setOnClickListener {
+        fabNewScript.setOnClickListener {
             createNewScript()
         }
     }
@@ -55,8 +62,8 @@ class MainActivity : AppCompatActivity() {
         val scripts = scriptStorage.getAllScripts()
         scriptAdapter.updateScripts(scripts)
         
-        binding.textViewEmpty.visibility = if (scripts.isEmpty()) View.VISIBLE else View.GONE
-        binding.recyclerViewScripts.visibility = if (scripts.isEmpty()) View.GONE else View.VISIBLE
+        textViewEmpty.visibility = if (scripts.isEmpty()) View.VISIBLE else View.GONE
+        recyclerViewScripts.visibility = if (scripts.isEmpty()) View.GONE else View.VISIBLE
     }
     
     private fun runScript(script: Script) {

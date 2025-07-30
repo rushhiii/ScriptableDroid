@@ -1,23 +1,35 @@
 package com.scriptabledroid.app
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.scriptabledroid.app.databinding.ActivityScriptEditorBinding
+import com.google.android.material.textfield.TextInputEditText
 import io.github.rosemoe.sora.langs.javascript.JavaScriptLanguage
+import io.github.rosemoe.sora.widget.CodeEditor
 import java.util.UUID
 
 class ScriptEditorActivity : AppCompatActivity() {
     
-    private lateinit var binding: ActivityScriptEditorBinding
+    private lateinit var editTextScriptName: TextInputEditText
+    private lateinit var codeEditor: CodeEditor
+    private lateinit var buttonSave: Button
+    private lateinit var buttonRun: Button
+    private lateinit var textViewOutput: TextView
     private lateinit var scriptStorage: ScriptStorage
     private lateinit var scriptEngine: ScriptEngine
     private var currentScript: Script? = null
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityScriptEditorBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_script_editor)
+        
+        editTextScriptName = findViewById(R.id.editTextScriptName)
+        codeEditor = findViewById(R.id.codeEditor)
+        buttonSave = findViewById(R.id.buttonSave)
+        buttonRun = findViewById(R.id.buttonRun)
+        textViewOutput = findViewById(R.id.textViewOutput)
         
         scriptStorage = ScriptStorage(this)
         scriptEngine = ScriptEngine(this)
@@ -28,18 +40,18 @@ class ScriptEditorActivity : AppCompatActivity() {
     }
     
     private fun setupCodeEditor() {
-        binding.codeEditor.apply {
+        codeEditor.apply {
             setEditorLanguage(JavaScriptLanguage())
             setTextSize(14f)
         }
     }
     
     private fun setupButtons() {
-        binding.buttonSave.setOnClickListener {
+        buttonSave.setOnClickListener {
             saveScript()
         }
         
-        binding.buttonRun.setOnClickListener {
+        buttonRun.setOnClickListener {
             runScript()
         }
     }
@@ -49,12 +61,12 @@ class ScriptEditorActivity : AppCompatActivity() {
         if (scriptId != null) {
             currentScript = scriptStorage.getScript(scriptId)
             currentScript?.let { script ->
-                binding.editTextScriptName.setText(script.name)
-                binding.codeEditor.setText(script.content)
+                editTextScriptName.setText(script.name)
+                codeEditor.setText(script.content)
             }
         } else {
             // New script - provide a template
-            binding.codeEditor.setText("""
+            codeEditor.setText("""
                 // Welcome to ScriptableDroid!
                 // This is a JavaScript environment with access to Android APIs
                 
@@ -74,8 +86,8 @@ class ScriptEditorActivity : AppCompatActivity() {
     }
     
     private fun saveScript() {
-        val name = binding.editTextScriptName.text.toString().trim()
-        val content = binding.codeEditor.text.toString()
+        val name = editTextScriptName.text.toString().trim()
+        val content = codeEditor.text.toString()
         
         if (name.isEmpty()) {
             Toast.makeText(this, "Please enter a script name", Toast.LENGTH_SHORT).show()
@@ -94,14 +106,14 @@ class ScriptEditorActivity : AppCompatActivity() {
     }
     
     private fun runScript() {
-        val content = binding.codeEditor.text.toString()
+        val content = codeEditor.text.toString()
         if (content.trim().isEmpty()) {
-            binding.textViewOutput.text = "No script to run"
+            textViewOutput.text = "No script to run"
             return
         }
         
         val result = scriptEngine.executeScript(content)
-        binding.textViewOutput.text = result
+        textViewOutput.text = result
     }
     
     override fun onDestroy() {

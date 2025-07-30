@@ -1,0 +1,8 @@
+# Example local.properties file
+# This file should contain the local configuration options for the build
+# To build this project, you need to set the Android SDK path
+# Uncomment and modify the line below:
+# sdk.dir=/path/to/your/android/sdk
+
+# If using Android Studio, this file will be auto-generated
+# Otherwise, you can create it manually with your Android SDK path

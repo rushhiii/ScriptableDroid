@@ -39,11 +39,25 @@ git clone https://github.com/rushhiii/ScriptableDroid.git
 cd ScriptableDroid
 ```
 
-2. Open the project in Android Studio
+2. Set up Android SDK path:
+   - If using Android Studio: Open the project and let Android Studio configure it automatically
+   - If building from command line: Copy `local.properties.example` to `local.properties` and set your Android SDK path
 
-3. Sync the project with Gradle files
+3. Build the project:
+```bash
+# Using Gradle Wrapper (recommended)
+./gradlew build
 
-4. Build and run the app on your device or emulator
+# Or on Windows
+gradlew.bat build
+```
+
+4. Install on device/emulator:
+```bash
+./gradlew installDebug
+```
+
+**Note**: The Gradle Wrapper is included in the project, so you don't need to install Gradle separately. The wrapper will automatically download the correct version of Gradle.
 
 ### Project Structure
 
@@ -106,11 +120,35 @@ console.log("Battery State: " + batteryState);
 
 ## Contributing
 
+We welcome contributions! Here's how to get started:
+
+### Development Setup
+
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. Clone your fork: `git clone https://github.com/yourusername/ScriptableDroid.git`
+3. Open in Android Studio
+4. Create a feature branch: `git checkout -b feature/amazing-feature`
+5. Make your changes
+6. Test thoroughly
+7. Commit your changes: `git commit -m 'Add amazing feature'`
+8. Push to your branch: `git push origin feature/amazing-feature`
+9. Open a Pull Request
+
+### Code Style
+
+- Follow Kotlin coding conventions
+- Use meaningful variable and function names  
+- Add comments for complex logic
+- Maintain consistent formatting (use Android Studio's auto-formatter)
+
+### Adding New JavaScript APIs
+
+To add new JavaScript APIs:
+
+1. Modify `ScriptEngine.kt` to add your API methods
+2. Test the API with example scripts
+3. Update the documentation in README.md
+4. Add example scripts demonstrating the new API
 
 ## License
 
